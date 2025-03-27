@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.game.codingGame.modal.CodingGameRegitration;
+import com.game.codingGame.modal.CodingGameRegistration;
 
 import jakarta.transaction.Transactional;
 @Repository
-public interface CodingGameRepository extends JpaRepository<CodingGameRegitration, Integer>{
+public interface CodingGameRepository extends JpaRepository<CodingGameRegistration, Integer>{
 	
 	@Query(value = "SELECT * FROM CG_REGISTRATION_MASTER WHERE USER_ID = :userId", nativeQuery = true)
-	Optional<CodingGameRegitration> findByUserId(String userId);
+	Optional<CodingGameRegistration> findByUserId(String userId);
 	
 	@Modifying
 	@Transactional
@@ -26,6 +26,5 @@ public interface CodingGameRepository extends JpaRepository<CodingGameRegitratio
 	@Transactional
     @Query(value ="DELETE FROM CG_REGISTRATION_MASTER C WHERE C.USER_ID = :userId", nativeQuery = true)
 	int deleteByUserId(String userId);
-	
 
 }

@@ -10,15 +10,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CG_REGISTRATION_MASTER")
-public class CodingGameRegitration {
+public class CodingGameRegistration {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int seqNum;
-
-	// Removed @Column annotation here since userId is derived
 	private String userId;
-
 	private String firstName;
 	private String middleName;
 	private String lastName;

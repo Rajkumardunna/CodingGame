@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.game.codingGame.loginSecurityConfig.LoginSecurityConfigEnAndDeCode;
-import com.game.codingGame.modal.CodingGameRegitration;
+import com.game.codingGame.modal.CodingGameRegistration;
 import com.game.codingGame.service.CodingGameService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,19 +26,19 @@ public class CodingGameController {
 	private CodingGameService codingGameService;
 	
 	@PostMapping("/registration")
-	public String registration(@RequestBody CodingGameRegitration codingGameRegitration) {
-		codingGameRegitration = codingGameService.saveUserRegistration(codingGameRegitration);
-		return codingGameRegitration.getFirstName()+" "+codingGameRegitration.getLastName()+" Your registrtion process successfully Happy to Login...! Your User Id : "+codingGameRegitration.getUserId();
+	public String registration(@RequestBody CodingGameRegistration codingGameRegistration) {
+		codingGameRegistration = codingGameService.saveUserRegistration(codingGameRegistration);
+		return codingGameRegistration.getFirstName()+" "+codingGameRegistration.getLastName()+" Your registrtion process successfully Happy to Login...! Your User Id : "+codingGameRegistration.getUserId();
 	}
 
 	@GetMapping("/getAllUserDetails")
-	public List<CodingGameRegitration> getAllUserDetail() {
-		return codingGameService.getUserRegitrationDetail();
+	public List<CodingGameRegistration> getAllUserDetail() {
+		return codingGameService.getUserRegistrationDetail();
 	}
 
 	@GetMapping("/getUserDetailByUserId")
 	public ResponseEntity<?> getUserDetailById(@RequestHeader("UserId") String userId) {
-		Optional<CodingGameRegitration> registrationDetail = codingGameService.findByUserId(userId);
+		Optional<CodingGameRegistration> registrationDetail = codingGameService.findByUserId(userId);
 		if (registrationDetail.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with the provided registration Id = " + userId);
 		}
@@ -46,8 +46,8 @@ public class CodingGameController {
 	}
 
 	@PostMapping("/login") 
-	public String login(@RequestBody CodingGameRegitration codingGameRegitration) {
-		boolean isAuthenticated = codingGameService.loging(codingGameRegitration);
+	public String login(@RequestBody CodingGameRegistration codingGameRegistration) {
+		boolean isAuthenticated = codingGameService.loging(codingGameRegistration);
 		if (isAuthenticated) {
 			return "Login successful!"; 
 		} else {
