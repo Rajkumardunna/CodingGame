@@ -18,6 +18,7 @@ public class CodingGameServiceImplement implements CodingGameService{
 	public CodingGameRepository codingGameRepository;
 
 	public CodingGameRegistration saveUserRegistration(CodingGameRegistration codingGameRegistration) {
+		
 		codingGameRepository.save(codingGameRegistration);
 		String userId = codingGameRegistration.getFirstName()+String.valueOf(codingGameRegistration.getSeqNum())+codingGameRegistration.getLastName().substring(0,1);
 		codingGameRepository.updateUserBySeqNum(userId,codingGameRegistration.getSeqNum());
@@ -44,7 +45,7 @@ public class CodingGameServiceImplement implements CodingGameService{
 	}
 
 	@Override
-	public boolean loging(CodingGameRegistration codingGameRegistration) {
+	public boolean login(CodingGameRegistration codingGameRegistration) {
 		Optional<CodingGameRegistration> userOptional = codingGameRepository.findByUserId(codingGameRegistration.getUserId());
 		if (userOptional.isPresent()) {
 			CodingGameRegistration user = userOptional.get();

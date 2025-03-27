@@ -20,7 +20,7 @@ public interface CodingGameRepository extends JpaRepository<CodingGameRegistrati
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE CG_REGISTRATION_MASTER C SET C.USER_ID = :userId WHERE C.SEQ_NUM = :seqNum", nativeQuery = true)
-	int updateUserBySeqNum(String userId, int seqNum);
+	int updateUserBySeqNum(String useId, int seqNum);
 	
 	@Modifying
 	@Transactional

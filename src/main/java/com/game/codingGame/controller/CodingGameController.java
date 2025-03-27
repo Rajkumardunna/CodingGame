@@ -46,7 +46,7 @@ public class CodingGameController {
 
 	@PostMapping("/login") 
 	public String login(@RequestBody CodingGameRegistration codingGameRegistration) {
-		boolean isAuthenticated = codingGameService.loging(codingGameRegistration);
+		boolean isAuthenticated = codingGameService.login(codingGameRegistration);
 		if (isAuthenticated) {
 			return "Login successful!"; 
 		} else {

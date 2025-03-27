@@ -16,6 +16,6 @@ public interface CodingGameService {
 	public List<CodingGameRegistration> getUserRegistrationDetail();
 	Optional<CodingGameRegistration> findByUserId(@Param("userId") String userId);
 	int deleteUserByUserId(@Param("userId") String userId);
-	public boolean loging(CodingGameRegistration codingGameRegistration);
+	public boolean login(CodingGameRegistration codingGameRegistration);
 }
 
