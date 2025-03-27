@@ -25,14 +25,8 @@ public class CodingGameController {
 	@Autowired
 	private CodingGameService codingGameService;
 	
-	//private LoginSecurityConfigEnAndDeCode loginSecurityConfigEnAndDeCode;
-
 	@PostMapping("/registration")
 	public String registration(@RequestBody CodingGameRegitration codingGameRegitration) {
-		//System.out.println("===============codingGameRegitration===="+codingGameRegitration.getPassword());
-	//	String encodedPassword = loginSecurityConfigEnAndDeCode.encryptPassword(codingGameRegitration.getPassword());
-		//System.out.println("===============encodedPassword===="+encodedPassword);
-     // codingGameRegitration.setPassword(encodedPassword);
 		codingGameRegitration = codingGameService.saveUserRegistration(codingGameRegitration);
 		return codingGameRegitration.getFirstName()+" "+codingGameRegitration.getLastName()+" Your registrtion process successfully Happy to Login...! Your User Id : "+codingGameRegitration.getUserId();
 	}
@@ -50,56 +44,14 @@ public class CodingGameController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(registrationDetail.get());
 	}
-	
-	  @PostMapping("/login") 
-	  public String login(@RequestBody CodingGameRegitration codingGameRegitration) {
-		  boolean isAuthenticated = codingGameService.loging(codingGameRegitration);
-		  if (isAuthenticated) {
-			  return "Login successful!"; 
-		  } else {
-			  return "Invalid username or password.";
-		  } 
-	  }
-	 
 
-
-	/*
-	 * // Get User by ID
-	 * 
-	 * @GetMapping("/getDetailById") public Optional<CodingGameRegitration>
-	 * getUserRegitrationDetailById(@RequestHeader("RegitrationDetailById") int id){
-	 * System.out.println("=======>>>run the log======"+id); return
-	 * codingGameService.findById(id); }
-	 */
-	
-	// PUT method to update user information
-
-	/*
-	 * @PutMapping("/edit/{id}") public String updateUser(@PathVariable int
-	 * id, @RequestBody CodingGameRegitration codingGameRegitration) { Field[]
-	 * fields = codingGameRegitration.getClass().getDeclaredFields();
-	 * System.out.println("Number of fields: " + fields.length); for (int i = 0; i
-	 * <fields.length; i++) { CodingGameRegitration userRegitration = fields.get(i);
-	 * if (userRegitration.getId().equals(id)) { codingGameRegitration.set(i,
-	 * updatedUser); return "User updated successfully!"; } } return
-	 * "User not found!"; }
-	 */
-
-	//method to delete a user by ID
-	
-	/*
-	 * @DeleteMapping("/deleteUserDetailByUserId") public String
-	 * deleteUserDetailByUserId(@RequestHeader("UserId") String userId){
-	 * codingGameService.deleteUserByUserId(userId); return "User with userId " +
-	 * userId + " has been deleted successfully!"; }
-	 * 
-	 * @PostMapping("/encodeBase64") public String encodeBase64(@RequestBody String
-	 * data) { return loginSecurityConfigEnAndDeCode.encode(data); }
-	 * 
-	 * // Endpoint for Base64 decoding
-	 * 
-	 * @PostMapping("/decodeBase64") public String decodeBase64(@RequestBody String
-	 * encodedData) { return loginSecurityConfigEnAndDeCode.decode(encodedData); }
-	 */
-	 
+	@PostMapping("/login") 
+	public String login(@RequestBody CodingGameRegitration codingGameRegitration) {
+		boolean isAuthenticated = codingGameService.loging(codingGameRegitration);
+		if (isAuthenticated) {
+			return "Login successful!"; 
+		} else {
+			return "Invalid username or password.";
+		} 
+	}
 }
