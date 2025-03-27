@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.game.codingGame.loginSecurityConfig.LoginSecurityConfigEnAndDeCode;
-import com.game.codingGame.modal.CodingGameRegistration;
+import com.game.codingGame.model.CodingGameRegistration;
 import com.game.codingGame.service.CodingGameService;
 
 @CrossOrigin(origins = "http://localhost:3000")

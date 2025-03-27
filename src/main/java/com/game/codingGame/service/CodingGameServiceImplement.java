@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.game.codingGame.modal.CodingGameRegistration;
+import com.game.codingGame.model.CodingGameRegistration;
 import com.game.codingGame.repository.CodingGameRepository;
 
 @Service

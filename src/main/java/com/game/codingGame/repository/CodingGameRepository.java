@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.game.codingGame.modal.CodingGameRegistration;
+import com.game.codingGame.model.CodingGameRegistration;
 
 import jakarta.transaction.Transactional;
 @Repository

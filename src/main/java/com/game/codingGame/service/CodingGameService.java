@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import com.game.codingGame.modal.CodingGameRegistration;
+import com.game.codingGame.model.CodingGameRegistration;
 @Service
 public interface CodingGameService {
 	@Autowired
