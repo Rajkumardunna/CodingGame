@@ -27,7 +27,7 @@ public class CodingGameController {
 	@PostMapping("/registration")
 	public String registration(@RequestBody CodingGameRegistration codingGameRegistration) {
 		codingGameRegistration = codingGameService.saveUserRegistration(codingGameRegistration);
-		return codingGameRegistration.getFirstName()+" "+codingGameRegistration.getLastName()+" Your registrtion process successfully Happy to Login...! Your User Id : "+codingGameRegistration.getUserId();
+		return codingGameRegistration.getFirstName()+" "+codingGameRegistration.getLastName()+", your registration has been processed successfully! We're happy to have you here. Your User Id : "+codingGameRegistration.getUserId();
 	}
 
 	@GetMapping("/getAllUserDetails")
