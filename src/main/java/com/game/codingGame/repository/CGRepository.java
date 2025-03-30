@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.game.codingGame.model.CodingGameRegistration;
+import com.game.codingGame.model.CGRegistration;
 
 import jakarta.transaction.Transactional;
 @Repository
-public interface CodingGameRepository extends JpaRepository<CodingGameRegistration, Integer>{
+public interface CGRepository extends JpaRepository<CGRegistration, Integer>{
 	
 	@Query(value = "SELECT * FROM CG_REGISTRATION_MASTER WHERE USER_ID = :userId", nativeQuery = true)
-	Optional<CodingGameRegistration> findByUserId(String userId);
+	Optional<CGRegistration> findByUserId(String userId);
 	
 	@Modifying
 	@Transactional

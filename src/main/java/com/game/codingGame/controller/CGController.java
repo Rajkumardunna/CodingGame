@@ -13,31 +13,31 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.game.codingGame.model.CodingGameRegistration;
-import com.game.codingGame.service.CodingGameService;
+import com.game.codingGame.model.CGRegistration;
+import com.game.codingGame.service.CGService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/CodingGame")
-public class CodingGameController {
+public class CGController {
 
 	@Autowired
-	private CodingGameService codingGameService;
+	private CGService codingGameService;
 	
 	@PostMapping("/registration")
-	public String registration(@RequestBody CodingGameRegistration codingGameRegistration) {
+	public String registration(@RequestBody CGRegistration codingGameRegistration) {
 		codingGameRegistration = codingGameService.saveUserRegistration(codingGameRegistration);
 		return codingGameRegistration.getFirstName()+" "+codingGameRegistration.getLastName()+", your registration has been processed successfully! We're happy to have you here. Your User Id : "+codingGameRegistration.getUserId();
 	}
 
 	@GetMapping("/getAllUserDetails")
-	public List<CodingGameRegistration> getAllUserDetail() {
+	public List<CGRegistration> getAllUserDetail() {
 		return codingGameService.getUserRegistrationDetail();
 	}
 
 	@GetMapping("/getUserDetailByUserId")
 	public ResponseEntity<?> getUserDetailById(@RequestHeader("UserId") String userId) {
-		Optional<CodingGameRegistration> registrationDetail = codingGameService.findByUserId(userId);
+		Optional<CGRegistration> registrationDetail = codingGameService.findByUserId(userId);
 		if (registrationDetail.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with the provided registration Id = " + userId);
 		}
@@ -45,7 +45,7 @@ public class CodingGameController {
 	}
 
 	@PostMapping("/login") 
-	public String login(@RequestBody CodingGameRegistration codingGameRegistration) {
+	public String login(@RequestBody CGRegistration codingGameRegistration) {
 		boolean isAuthenticated = codingGameService.login(codingGameRegistration);
 		if (isAuthenticated) {
 			return "Login successful!"; 
