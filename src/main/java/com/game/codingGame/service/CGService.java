@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import com.game.codingGame.model.CodingGameRegistration;
+import com.game.codingGame.model.CGRegistration;
 @Service
-public interface CodingGameService {
+public interface CGService {
 	@Autowired
-	public CodingGameRegistration saveUserRegistration(CodingGameRegistration codingGameRegistration);
-	public List<CodingGameRegistration> getUserRegistrationDetail();
-	Optional<CodingGameRegistration> findByUserId(@Param("userId") String userId);
+	public CGRegistration saveUserRegistration(CGRegistration codingGameRegistration);
+	public List<CGRegistration> getUserRegistrationDetail();
+	Optional<CGRegistration> findByUserId(@Param("userId") String userId);
 	int deleteUserByUserId(@Param("userId") String userId);
-	public boolean login(CodingGameRegistration codingGameRegistration);
+	public boolean login(CGRegistration codingGameRegistration);
 }
 

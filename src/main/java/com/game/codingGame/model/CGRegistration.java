@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CG_REGISTRATION_MASTER")
-public class CodingGameRegistration {
+public class CGRegistration {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

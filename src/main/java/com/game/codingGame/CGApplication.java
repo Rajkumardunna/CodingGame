@@ -6,12 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SpringBootApplication(scanBasePackages = "com.game.codingGame") 
-public class CodingGameApplication {
+public class CGApplication {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CodingGameApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGApplication.class);
 
 	public static void main(String[] args) {
-		SpringApplication.run(CodingGameApplication.class, args);
+		SpringApplication.run(CGApplication.class, args);
 		logger.info("Application has started successfully!");
 	}
 }

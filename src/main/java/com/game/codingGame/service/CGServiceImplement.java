@@ -9,15 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.game.codingGame.model.CodingGameRegistration;
-import com.game.codingGame.repository.CodingGameRepository;
+import com.game.codingGame.model.CGRegistration;
+import com.game.codingGame.repository.CGRepository;
 
 @Service
-public class CodingGameServiceImplement implements CodingGameService{
+public class CGServiceImplement implements CGService{
 	@Autowired
-	public CodingGameRepository codingGameRepository;
+	public CGRepository codingGameRepository;
 
-	public CodingGameRegistration saveUserRegistration(CodingGameRegistration codingGameRegistration) {
+	public CGRegistration saveUserRegistration(CGRegistration codingGameRegistration) {
 		
 		codingGameRepository.save(codingGameRegistration);
 		String userId = codingGameRegistration.getFirstName()+String.valueOf(codingGameRegistration.getSeqNum())+codingGameRegistration.getLastName().substring(0,1);
@@ -27,15 +27,15 @@ public class CodingGameServiceImplement implements CodingGameService{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CodingGameRegistration> getUserRegistrationDetail() {
+	public List<CGRegistration> getUserRegistrationDetail() {
 		if (codingGameRepository.findAll().isEmpty()) {
-			return (List<CodingGameRegistration>) ResponseEntity.status(HttpStatus.NOT_FOUND).body("Oops.....!");
+			return (List<CGRegistration>) ResponseEntity.status(HttpStatus.NOT_FOUND).body("Oops.....!");
 		}
 		return codingGameRepository.findAll();
 	}
 
 	@Override
-	public Optional<CodingGameRegistration> findByUserId(String userId) {
+	public Optional<CGRegistration> findByUserId(String userId) {
 		return codingGameRepository.findByUserId(userId);
 	}
 
@@ -45,11 +45,11 @@ public class CodingGameServiceImplement implements CodingGameService{
 	}
 
 	@Override
-	public boolean login(CodingGameRegistration codingGameRegistration) {
-		Optional<CodingGameRegistration> userOptional = codingGameRepository.findByUserId(codingGameRegistration.getUserId());
+	public boolean login(CGRegistration codingGameRegistration) {
+		Optional<CGRegistration> userOptional = codingGameRepository.findByUserId(codingGameRegistration.getUserId());
 		if (userOptional.isPresent()) {
-			CodingGameRegistration user = userOptional.get();
-			return  user.getPassword().equals(codingGameRegistration.getPassword());
+			CGRegistration user = userOptional.get();
+			return user.getPassword().equals(codingGameRegistration.getPassword());
 		}
 		return false;
 	}
