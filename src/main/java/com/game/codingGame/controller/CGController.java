@@ -3,6 +3,7 @@ package com.game.codingGame.controller;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.util.HtmlUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +28,9 @@ public class CGController {
 	@PostMapping("/registration")
 	public String registration(@RequestBody CGRegistration codingGameRegistration) {
 		codingGameRegistration = codingGameService.saveUserRegistration(codingGameRegistration);
-		return codingGameRegistration.getFirstName()+" "+codingGameRegistration.getLastName()+", your registration has been processed successfully! We're happy to have you here. Your User Id : "+codingGameRegistration.getUserId();
+		String firstName = HtmlUtils.htmlEscape(codingGameRegistration.getFirstName());
+		String lastName = HtmlUtils.htmlEscape(codingGameRegistration.getLastName());
+		return firstName + " " + lastName + ", your registration has been processed successfully! We're happy to have you here. Your User Id : " + codingGameRegistration.getUserId();
 	}
 
 	@GetMapping("/getAllUserDetails")
