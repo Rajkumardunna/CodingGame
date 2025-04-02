@@ -18,4 +18,3 @@ public interface CGService {
 	int deleteUserByUserId(@Param("userId") String userId);
 	public boolean login(CGRegistration codingGameRegistration);
 }
-
