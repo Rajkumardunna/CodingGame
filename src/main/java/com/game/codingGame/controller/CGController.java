@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.game.codingGame.model.CGRegistration;
+import com.game.codingGame.service.CGOtpServiceImp;
 import com.game.codingGame.service.CGService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -25,12 +26,28 @@ public class CGController {
 	@Autowired
 	private CGService codingGameService;
 	
+	@Autowired 
+	private CGOtpServiceImp otpService ;
+
 	@PostMapping("/registration")
 	public String registration(@RequestBody CGRegistration codingGameRegistration) {
-		codingGameRegistration = codingGameService.saveUserRegistration(codingGameRegistration);
-		String firstName = HtmlUtils.htmlEscape(codingGameRegistration.getFirstName());
-		String lastName = HtmlUtils.htmlEscape(codingGameRegistration.getLastName());
-		return firstName + " " + lastName + ", your registration has been processed successfully! We're happy to have you here. Your User Id : " + codingGameRegistration.getUserId();
+	    final CGRegistration finalCodingGameRegistration = codingGameRegistration;
+	    return Optional.ofNullable(otpService.sendOTPEmail(finalCodingGameRegistration))
+	            .map(generateOTP -> {
+	                final CGRegistration savedRegistration = codingGameService.saveUserRegistration(finalCodingGameRegistration);
+	                return savedRegistration.getFirstName() + " " + savedRegistration.getLastName() + ", your OTP has been generated successfully and "
+	                        + "sent to your registered Email. Valid for only 90 seconds.";
+	            }).orElse("Something went wrong, please try again later.");
+	}
+	
+	@PostMapping("/validateOTP")
+	public String validateOpt(@RequestBody CGRegistration otpValidate, @RequestHeader("email") String email) {
+		return codingGameService.validateOtp(otpValidate, email);
+	}
+	
+	@PostMapping("/savePersonalDetails")
+	public String savePersonalDetails(@RequestBody CGRegistration otpValidate, @RequestHeader("UserId") String userId) {
+		return codingGameService.savePersonalDetails(otpValidate, userId);
 	}
 
 	@GetMapping("/getAllUserDetails")

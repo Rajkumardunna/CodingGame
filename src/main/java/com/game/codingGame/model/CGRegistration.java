@@ -23,11 +23,10 @@ public class CGRegistration {
 	private String email;
 	private int otp;
 	private String educationQualification;
-	private String programingLanguage;
-	private String gander;
+	private String programmingLanguage;
+	private String gender;
 	private String location;
 	private String password;
-	private String confirmPassword;
 
 	public int getSeqNum() {
 		return seqNum;
@@ -101,20 +100,20 @@ public class CGRegistration {
 		this.educationQualification = educationQualification;
 	}
 
-	public String getProgramingLanguage() {
-		return programingLanguage;
+	public String getProgrammingLanguage() {
+		return programmingLanguage;
 	}
 
-	public void setProgramingLanguage(String programingLanguage) {
-		this.programingLanguage = programingLanguage;
+	public void setProgrammingLanguage(String programmingLanguage) {
+		this.programmingLanguage = programmingLanguage;
 	}
 
-	public String getGander() {
-		return gander;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setGander(String gander) {
-		this.gander = gander;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public String getLocation() {
@@ -131,13 +130,5 @@ public class CGRegistration {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
 	}
 }
