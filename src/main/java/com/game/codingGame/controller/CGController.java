@@ -47,7 +47,8 @@ public class CGController {
 	
 	@PostMapping("/savePersonalDetails")
 	public String savePersonalDetails(@RequestBody CGRegistration otpValidate, @RequestHeader("UserId") String userId) {
-		return codingGameService.savePersonalDetails(otpValidate, userId);
+		String sanitizedUserId = HtmlUtils.htmlEscape(userId);
+		return codingGameService.savePersonalDetails(otpValidate, sanitizedUserId);
 	}
 
 	@GetMapping("/getAllUserDetails")
