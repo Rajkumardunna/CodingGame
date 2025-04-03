@@ -25,6 +25,7 @@ public class CGServiceImplement implements CGService{
 		return codingGameRegistration;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CGRegistration> getUserRegistrationDetail() {
 		if (codingGameRepository.findAll().isEmpty()) {
 			return (List<CGRegistration>) ResponseEntity.status(HttpStatus.NOT_FOUND).body("Oops.....!");
