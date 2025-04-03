@@ -15,7 +15,7 @@ public class CGServiceImplement implements CGService{
 	public CGRepository codingGameRepository;
 	
 	@Autowired
-	public CGOtpServiceImp cGOtpServiceImp;
+	public CGOtpServiceImp cgOtpServiceImp;
 
 	public CGRegistration saveUserRegistration(CGRegistration codingGameRegistration) {
 		codingGameRepository.save(codingGameRegistration);
@@ -59,7 +59,7 @@ public class CGServiceImplement implements CGService{
 		return userOptional.map(user -> {
 					System.out.println("Stored OTP for user: " + user.getOtp());
 					if (user.getOtp() == codingGameRegistration.getOtp()) {
-						boolean isOtpValid = cGOtpServiceImp.validateOTP(email, String.valueOf(codingGameRegistration.getOtp()));
+						boolean isOtpValid = cgOtpServiceImp.validateOTP(email, String.valueOf(codingGameRegistration.getOtp()));
 						System.out.println("OTP Validation Result: " + isOtpValid);
 						return isOtpValid ? "OTPCODE#01" : "OTPCODE#02";
 					}else {
