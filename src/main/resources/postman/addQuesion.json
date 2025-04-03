@@ -1,0 +1,10 @@
+{
+    "_comment": "http://localhost:9090/quiz/addQuestion",
+    "question": "WWhat is the capital of Australia?",
+    "answer": "Canberra",
+    "correctAnswer": "A",
+    "optionA": "Canberra",
+    "optionB": "New South Wales",
+    "optionC": "Sydney",
+    "optionD": "Melbourne"
+}
