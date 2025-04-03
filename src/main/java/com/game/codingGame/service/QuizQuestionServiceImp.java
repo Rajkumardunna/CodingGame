@@ -14,4 +14,10 @@ public class QuizQuestionServiceImp implements QuizQuestionService {
 	public QuizQuestionRequest saveQuestion(QuizQuestionRequest quizQuestion) {
 		return quizRepository.save(quizQuestion);
 	}
+	
+	@Override
+	public int deleteQuestion(String questionId) {
+		return quizRepository.deleteQuestionbById(questionId);
+	}
+	
 }
