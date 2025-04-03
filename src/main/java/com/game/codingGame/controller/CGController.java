@@ -35,7 +35,9 @@ public class CGController {
 	    return Optional.ofNullable(otpService.sendOTPEmail(finalCodingGameRegistration))
 	            .map(generateOTP -> {
 	                final CGRegistration savedRegistration = codingGameService.saveUserRegistration(finalCodingGameRegistration);
-	                return savedRegistration.getFirstName() + " " + savedRegistration.getLastName() + ", your OTP has been generated successfully and "
+	                String escapedFirstName = HtmlUtils.htmlEscape(savedRegistration.getFirstName());
+	                String escapedLastName = HtmlUtils.htmlEscape(savedRegistration.getLastName());
+	                return escapedFirstName + " " + escapedLastName + ", your OTP has been generated successfully and "
 	                        + "sent to your registered Email. Valid for only 90 seconds.";
 	            }).orElse("Something went wrong, please try again later.");
 	}
