@@ -2,7 +2,7 @@ package com.game.codingGame.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -40,6 +40,7 @@ public class QuizQuestionController {
             return ResponseEntity.badRequest().body(String.join(", ", errors));
         }
         quizService.deleteQuestion(deleteQuestion.getQuestionId());
-        return ResponseEntity.ok("Question ID#" + deleteQuestion.getQuestionId() + " deleted successfully!");
+        String encodedQuestionId = StringEscapeUtils.escapeHtml4(deleteQuestion.getQuestionId().toString());
+        return ResponseEntity.ok("Question ID#" + encodedQuestionId + " deleted successfully!");
     }
 }
