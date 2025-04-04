@@ -1,5 +1,4 @@
 package com.game.codingGame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +12,6 @@ public class CGApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CGApplication.class, args);
-		System.out.println(GREEN+"Application has started successfully!"+RESET);
 		logger.info(GREEN+"Application has started successfully!"+RESET);
 	}
 }

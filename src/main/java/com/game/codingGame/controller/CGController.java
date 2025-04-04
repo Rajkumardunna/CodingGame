@@ -2,10 +2,14 @@ package com.game.codingGame.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.util.HtmlUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,65 +19,73 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.game.codingGame.model.CGRegistration;
-import com.game.codingGame.service.CGOtpServiceImp;
+import com.game.codingGame.model.OtpRequest;
+import com.game.codingGame.model.SavePersonalDetailsRequest;
 import com.game.codingGame.service.CGService;
+import com.game.constants.CGConstants;
+
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/CodingGame")
 public class CGController {
-
-	@Autowired
-	private CGService codingGameService;
 	
-	@Autowired 
-	private CGOtpServiceImp otpService ;
-
+	@Autowired private CGService codingGameService;
+	
 	@PostMapping("/registration")
-	public String registration(@RequestBody CGRegistration codingGameRegistration) {
-	    final CGRegistration finalCodingGameRegistration = codingGameRegistration;
-	    return Optional.ofNullable(otpService.sendOTPEmail(finalCodingGameRegistration))
-	            .map(generateOTP -> {
-	                final CGRegistration savedRegistration = codingGameService.saveUserRegistration(finalCodingGameRegistration);
-	                String escapedFirstName = HtmlUtils.htmlEscape(savedRegistration.getFirstName());
-	                String escapedLastName = HtmlUtils.htmlEscape(savedRegistration.getLastName());
-	                return escapedFirstName + " " + escapedLastName + ", your OTP has been generated successfully and "
-	                        + "sent to your registered Email. Valid for only 90 seconds.";
-	            }).orElse("Something went wrong, please try again later.");
+	public ResponseEntity<String> registration(@Validated @RequestBody CGRegistration cgRegistration, BindingResult bindingResult) {
+	    if (bindingResult.hasErrors()) {
+	        String errorMessages = bindingResult.getFieldErrors().stream().map(error -> error.getDefaultMessage()).collect(Collectors.joining(", "));
+	        return ResponseEntity.badRequest().body(errorMessages);
+	    }
+	    return ResponseEntity.ok(codingGameService.saveUserRegistration(cgRegistration));
 	}
 	
 	@PostMapping("/validateOTP")
-	public String validateOpt(@RequestBody CGRegistration otpValidate, @RequestHeader("email") String email) {
-		return codingGameService.validateOtp(otpValidate, email);
+	public ResponseEntity<String> validateOtp(@RequestHeader("email") String emailId ,@Valid @RequestBody OtpRequest otpRequest,BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			String errorMessages = bindingResult.getFieldErrors().stream().findFirst().map(error -> error.getDefaultMessage()).orElse(CGConstants.RETRY_ERROR_MESSAGE);
+			return ResponseEntity.badRequest().body(errorMessages.toString());
+		}
+		return ResponseEntity.ok(codingGameService.validateOtp(otpRequest.getEmailOtp(), emailId));
+	}
+
+	@PostMapping("/resendOtp")
+	public ResponseEntity<String> resendOtp(@RequestHeader("email") String emailId) {
+		return ResponseEntity.ok(codingGameService.resendOtp(emailId));
 	}
 	
 	@PostMapping("/savePersonalDetails")
-	public String savePersonalDetails(@RequestBody CGRegistration otpValidate, @RequestHeader("UserId") String userId) {
-		String sanitizedUserId = HtmlUtils.htmlEscape(userId);
-		return codingGameService.savePersonalDetails(otpValidate, sanitizedUserId);
+	public ResponseEntity<String> savePersonalDetails( @RequestHeader("UserId") String userId, @Valid @RequestBody SavePersonalDetailsRequest savePersonalDetailsRequest, BindingResult bindingResult) {
+		 if (bindingResult.hasErrors()) {
+			 String errorMessages = bindingResult.getFieldErrors().stream().findFirst().map(error -> error.getDefaultMessage()).orElse(CGConstants.RETRY_ERROR_MESSAGE);
+		        return ResponseEntity.badRequest().body(errorMessages.toString());
+		    }
+		return ResponseEntity.ok(codingGameService.savePersonalDetails(savePersonalDetailsRequest, HtmlUtils.htmlEscape(userId)));
 	}
 
 	@GetMapping("/getAllUserDetails")
 	public List<CGRegistration> getAllUserDetail() {
 		return codingGameService.getUserRegistrationDetail();
 	}
-
-	@GetMapping("/getUserDetailByUserId")
-	public ResponseEntity<?> getUserDetailById(@RequestHeader("UserId") String userId) {
-		Optional<CGRegistration> registrationDetail = codingGameService.findByUserId(userId);
+	
+	@GetMapping("/getUserDetailsByUserId")
+	public ResponseEntity<?> getUserDetailsById(@RequestHeader("UserId") String userId) {
+		Optional<SavePersonalDetailsRequest> registrationDetail = codingGameService.findByUserId(HtmlUtils.htmlEscape(userId));
 		if (registrationDetail.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with the provided registration Id = " + userId);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with the provided user Id " + userId);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(registrationDetail.get());
 	}
 
 	@PostMapping("/login") 
-	public String login(@RequestBody CGRegistration codingGameRegistration) {
-		boolean isAuthenticated = codingGameService.login(codingGameRegistration);
+	public String login(@RequestBody SavePersonalDetailsRequest savePersonalDetailsRequest) {
+		boolean isAuthenticated = codingGameService.login(savePersonalDetailsRequest);
 		if (isAuthenticated) {
 			return "Login successful!"; 
 		} else {
-			return "Invalid username or password.";
+			return "Invalid Username or Password.";
 		} 
 	}
 }

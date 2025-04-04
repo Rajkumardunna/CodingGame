@@ -1,5 +1,7 @@
 package com.game.codingGame.model;
 
+ 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 
@@ -7,6 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "CG_REGISTRATION_MASTER")
@@ -16,17 +23,30 @@ public class CGRegistration {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int seqNum;
 	private String userId;
+	
+	@NotBlank(message = "First name cannot be null or empty")
+    @Size(min = 3, max = 50, message = "First name must be between 3 and 50 characters")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "First name must contains alphabets only")
 	private String firstName;
+	
+	@Pattern(regexp = "^[A-Za-z]*$", message = "Middle name must contains alphabets only")
 	private String middleName;
+	
+	@NotNull(message = "Last name cannot be null or empty")
+    @Size(min = 1, max = 50, message = "Last name must be between 1 and 50 characters")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "Last name must contains alphabets only")
 	private String lastName;
+	
+	@NotNull(message = "Phone number cannot be null or empty")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Phone number must be 10 digits")
 	private String phoneNumber;
+	
+	@NotNull(message = "Email cannot be null or empty")
+	@Email(message = "Invalid email address")
+	@Column(unique = true)
 	private String email;
-	private int otp;
-	private String educationQualification;
-	private String programmingLanguage;
-	private String gender;
-	private String location;
-	private String password;
+
+	private String otp;
 
 	public int getSeqNum() {
 		return seqNum;
@@ -84,51 +104,11 @@ public class CGRegistration {
 		this.email = email;
 	}
 
-	public int getOtp() {
+	public String getOtp() {
 		return otp;
 	}
 
-	public void setOtp(int otp) {
+	public void setOtp(String otp) {
 		this.otp = otp;
-	}
-
-	public String getEducationQualification() {
-		return educationQualification;
-	}
-
-	public void setEducationQualification(String educationQualification) {
-		this.educationQualification = educationQualification;
-	}
-
-	public String getProgrammingLanguage() {
-		return programmingLanguage;
-	}
-
-	public void setProgrammingLanguage(String programmingLanguage) {
-		this.programmingLanguage = programmingLanguage;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 }

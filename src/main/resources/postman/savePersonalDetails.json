@@ -1,0 +1,9 @@
+{
+	"_comment": "http://localhost:8080/CodingGame/savePersonalDetails",
+    "educationQualification": "Bible Stady",
+    "programmingLanguage": "Bible",
+    "gender": "M",
+    "location": "Pothavaram",
+    "password": "A$ish@123",
+    "confirmPassword": "A$ish@123"
+}

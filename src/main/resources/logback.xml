@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+
+    <!-- Console appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>D:/logs/app.log</file>
         <encoder>
@@ -7,7 +16,18 @@
         </encoder>
     </appender>
 
+    <!-- Root logger with both file and console appenders -->
     <root level="info">
         <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
     </root>
+
+    <!-- Hibernate-specific logging -->
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    
+     <logger name="org.hibernate.stat" level="INFO"/>
+
 </configuration>
+

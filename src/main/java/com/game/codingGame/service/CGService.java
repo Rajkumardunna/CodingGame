@@ -6,15 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import com.game.codingGame.model.CGRegistration;
+import com.game.codingGame.model.SavePersonalDetailsRequest;
 
 @Service
 public interface CGService {
 	@Autowired
-	public CGRegistration saveUserRegistration(CGRegistration codingGameRegistration);
-	public String validateOtp(CGRegistration codingGameRegistration, String email);
-	public String savePersonalDetails(CGRegistration codingGameRegistration, String email);
+	public String saveUserRegistration(CGRegistration cgRegistration);
+	public String validateOtp(String emailOtp, String email);
+	public String resendOtp(String email);
+	public String savePersonalDetails(SavePersonalDetailsRequest savePersonalDetailsRequest, String email);
+	public boolean login(SavePersonalDetailsRequest SavePersonalDetailsRequest);
 	public List<CGRegistration> getUserRegistrationDetail();
-	Optional<CGRegistration> findByUserId(@Param("userId") String userId);
+	Optional<SavePersonalDetailsRequest> findByUserId(@Param("userId") String userId);
 	int deleteUserByUserId(@Param("userId") String userId);
-	public boolean login(CGRegistration codingGameRegistration);
 }
